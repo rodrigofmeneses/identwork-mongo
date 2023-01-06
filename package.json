@@ -1,0 +1,22 @@
+{
+  "name": "identwork",
+  "version": "1.0.0",
+  "description": "Api to manage workers",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --inspect server.js",
+    "test": "jest"
+  },
+  "author": "Rodrigo Meneses",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.2"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1",
+    "nodemon": "^2.0.20"
+  }
+}
