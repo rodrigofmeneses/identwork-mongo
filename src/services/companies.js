@@ -44,7 +44,7 @@ const CompaniesService = {
      * @param {object} data Data of Company
     */
     try {
-      return Company.findByIdAndUpdate(id, data, { returnDocument: 'after' })
+      return Company.findByIdAndUpdate(id, data, { returnDocument: 'after', runValidators: true })
     } catch (error) {
       throw error
     }
