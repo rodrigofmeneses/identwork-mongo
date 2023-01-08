@@ -1,4 +1,6 @@
-import Company from "../models/company.js"
+import mongoose from "mongoose";
+import Company from "../models/company.js";
+import Employee from "../models/employee.js";
 
 const CompaniesService = {
   async readAll() {
@@ -23,16 +25,26 @@ const CompaniesService = {
     }
   },
 
+  async findEmployees(id) {
+    /** Find all employees by company
+     * @param {number} id Id of Company
+    */
+    try {
+      return Employee.find(
+        { 'company': mongoose.Types.ObjectId(id) }
+      ).populate('company')
+    } catch (error) {
+      throw error
+    }
+  },
+
   async create(data) {
     /** Create a company
      * @param {object} data Data of Company
      */
     const company = new Company(data)
     try {
-      const validationError = await company.validate()
-      if (!validationError) {
-        return company.save()
-      }
+      return company.save()
     } catch (error) {
       throw error
     }

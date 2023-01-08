@@ -26,6 +26,16 @@ const CompaniesController = {
     }
   },
 
+  async getEmployeesByCompanyId(req, res) {
+    const id = req.params.id
+    try {
+      const result = await CompaniesService.findEmployees(id)
+      res.json(result)
+    } catch (error) {
+      res.status(404).json({ message: error.message })
+    }
+  },
+
   async createCompany(req, res) {
     const body = req.body
     try {
