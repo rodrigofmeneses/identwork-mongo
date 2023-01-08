@@ -29,10 +29,8 @@ const EmployeesService = {
      */
     const employee = new Employee(data)
     try {
-      const validationError = await employee.validate()
-      if (!validationError) {
-        return employee.save().populate('company')
-      }
+      await employee.save()
+      return employee.populate('company')
     } catch (error) {
       throw error
     }
@@ -47,7 +45,10 @@ const EmployeesService = {
       return Employee.findByIdAndUpdate(
         id,
         data,
-        { returnDocument: 'after', runValidators: true }
+        {
+          returnDocument: 'after',
+          runValidators: true
+        }
       ).populate('company')
     } catch (error) {
       throw error
