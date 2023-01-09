@@ -8,7 +8,7 @@ const EmployeesController = {
    * @returns 
    */
   async getEmployees(req, res) {
-    const { page, limit, filter } = req.query
+    const { page = 1, limit = 20 , filter } = req.query
     try {
       const result = await EmployeesService.readAll(page, limit, filter)
       res.json(result)

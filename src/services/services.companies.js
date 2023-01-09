@@ -3,10 +3,11 @@ import Company from "../models/company.js";
 import Employee from "../models/employee.js";
 
 const CompaniesService = {
-  async readAll(page, limit, name) {
+  async readAll(page, limit, filter) {
     /** Read all companies
-     * @param {page} id Page number
-     * @param {limit} id Limit of companies per page
+     * @param {page} number Page number
+     * @param {limit} number Limit of companies per page
+     * @param {filter} string Filter number
      */
     try {
       const options = {
@@ -16,8 +17,11 @@ const CompaniesService = {
           docs: 'companies'
         }
       }
-      const regex = new RegExp(name, 'i')
-      return Company.paginate({ name: { $regex: regex } }, options)
+
+      const regex = new RegExp(filter, 'i')
+      let find_query = !filter ? {} : { name: { $regex: regex } }
+
+      return Company.paginate(find_query, options)
     } catch (error) {
       throw error
     }

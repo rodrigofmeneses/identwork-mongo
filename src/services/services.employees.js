@@ -3,8 +3,9 @@ import Employee from "../models/employee.js";
 const EmployeesService = {
   async readAll(page, limit, filter) {
     /** Read all employees
-     * @param {page} id Page number
-     * @param {limit} id Limit of employees per page
+     * @param {page} number Page number
+     * @param {limit} number Limit of employees per page
+     * @param {filter} string Filter to name, warname or ID
      */
     try {
       const options = {
@@ -15,8 +16,9 @@ const EmployeesService = {
           docs: 'employees'
         }
       }
+
       const regex = new RegExp(filter, 'i')
-      return Employee.paginate({
+      let find_query = !filter ? {} : {
         $or: [
           { name: { $regex: regex } },
           { war_name: { $regex: regex } },
@@ -28,7 +30,9 @@ const EmployeesService = {
               }
             }
           }]
-      }, options)
+      }
+      
+      return Employee.paginate(find_query, options)
     } catch (error) {
       throw error
     }
