@@ -8,12 +8,12 @@ const EmployeesController = {
    * @returns 
    */
   async getEmployees(req, res) {
-    const { page = 1, limit = 5 } = req.query
+    const { page, limit, filter } = req.query
     try {
-      const result = await EmployeesService.readAll(page, limit)
-      return res.json(result)
+      const result = await EmployeesService.readAll(page, limit, filter)
+      res.json(result)
     } catch (error) {
-      return error
+      res.status(400).json({ message: error.message })
     }
   },
 

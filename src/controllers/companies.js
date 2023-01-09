@@ -8,9 +8,9 @@ const CompaniesController = {
    * @returns 
    */
   async getCompanies(req, res) {
-    const { page = 1, limit = 5 } = req.query
+    const { page, limit, name } = req.query
     try {
-      const result = await CompaniesService.readAll(page, limit)
+      const result = await CompaniesService.readAll(page, limit, name)
       return res.json(result)
     } catch (error) {
       return error

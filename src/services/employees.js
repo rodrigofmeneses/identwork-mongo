@@ -1,7 +1,7 @@
-import Employee from "../models/employee.js"
+import Employee from "../models/employee.js";
 
 const EmployeesService = {
-  async readAll(page, limit) {
+  async readAll(page, limit, filter) {
     /** Read all employees
      * @param {page} id Page number
      * @param {limit} id Limit of employees per page
@@ -15,7 +15,20 @@ const EmployeesService = {
           docs: 'employees'
         }
       }
-      return Employee.paginate({}, options)
+      const regex = new RegExp(filter, 'i')
+      return Employee.paginate({
+        $or: [
+          { name: { $regex: regex } },
+          { war_name: { $regex: regex } },
+          {
+            "$expr": {
+              "$regexMatch": {
+                "input": { "$toString": "$id" },
+                "regex": regex
+              }
+            }
+          }]
+      }, options)
     } catch (error) {
       throw error
     }

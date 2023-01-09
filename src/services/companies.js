@@ -3,7 +3,7 @@ import Company from "../models/company.js";
 import Employee from "../models/employee.js";
 
 const CompaniesService = {
-  async readAll(page, limit) {
+  async readAll(page, limit, name) {
     /** Read all companies
      * @param {page} id Page number
      * @param {limit} id Limit of companies per page
@@ -15,8 +15,9 @@ const CompaniesService = {
         customLabels: {
           docs: 'companies'
         }
-      };
-      return Company.paginate({}, options)
+      }
+      const regex = new RegExp(name, 'i')
+      return Company.paginate({ name: { $regex: regex } }, options)
     } catch (error) {
       throw error
     }
