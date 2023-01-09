@@ -1,4 +1,4 @@
-import EmployeesService from "../services/employees.js"
+import EmployeesService from "../services/services.employees.js"
 
 const EmployeesController = {
   /** Employees Controllers

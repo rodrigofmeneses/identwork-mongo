@@ -1,4 +1,4 @@
-import CompaniesService from "../services/companies.js"
+import CompaniesService from "../services/services.companies.js"
 
 const CompaniesController = {
   /** Companies Controllers

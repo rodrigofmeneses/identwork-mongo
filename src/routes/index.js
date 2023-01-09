@@ -1,7 +1,7 @@
 import express from "express";
 import jsonErrorHandler from "../middleware/jsonErroHandler.js";
-import companies from "./companies.js";
-import employees from "./employees.js";
+import companies from "./routes.companies.js";
+import employees from "./routes.employees.js";
 
 function init_routes(app) {
     app.use(express.json())
