@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 const employeeSchema = new mongoose.Schema(
   {
@@ -19,6 +20,8 @@ const employeeSchema = new mongoose.Schema(
     versionKey: false
   }
 )
+
+employeeSchema.plugin(mongoosePaginate)
 
 const Employee = mongoose.model('employees', employeeSchema)
 

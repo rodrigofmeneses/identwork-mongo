@@ -1,12 +1,21 @@
 import Employee from "../models/employee.js"
 
 const EmployeesService = {
-  async readAll() {
-    /** Read all companies
-     * 
+  async readAll(page, limit) {
+    /** Read all employees
+     * @param {page} id Page number
+     * @param {limit} id Limit of employees per page
      */
     try {
-      return Employee.find().populate('company')
+      const options = {
+        page: page,
+        limit: limit,
+        populate: 'company',
+        customLabels: {
+          docs: 'employees'
+        }
+      }
+      return Employee.paginate({}, options)
     } catch (error) {
       throw error
     }

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 const companySchema = new mongoose.Schema(
   {
@@ -12,6 +13,9 @@ const companySchema = new mongoose.Schema(
     versionKey: false
   }
 )
+
+companySchema.plugin(mongoosePaginate)
+
 const Company = mongoose.model('companies', companySchema)
 
 export default Company

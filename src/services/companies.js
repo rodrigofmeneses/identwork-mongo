@@ -3,12 +3,20 @@ import Company from "../models/company.js";
 import Employee from "../models/employee.js";
 
 const CompaniesService = {
-  async readAll() {
+  async readAll(page, limit) {
     /** Read all companies
-     * 
+     * @param {page} id Page number
+     * @param {limit} id Limit of companies per page
      */
     try {
-      return Company.find()
+      const options = {
+        page: page,
+        limit: limit,
+        customLabels: {
+          docs: 'companies'
+        }
+      };
+      return Company.paginate({}, options)
     } catch (error) {
       throw error
     }
@@ -25,14 +33,25 @@ const CompaniesService = {
     }
   },
 
-  async findEmployees(id) {
+  async findEmployees(id, page, limit) {
     /** Find all employees by company
      * @param {number} id Id of Company
+     * @param {page} id Page number
+     * @param {limit} id Limit of employees per page
     */
+    const options = {
+      page: page,
+      limit: limit,
+      populate: 'company',
+      customLabels: {
+        docs: 'employees'
+      }
+    }
     try {
-      return Employee.find(
-        { 'company': mongoose.Types.ObjectId(id) }
-      ).populate('company')
+      return Employee.paginate(
+        { 'company': mongoose.Types.ObjectId(id) },
+        options
+      )
     } catch (error) {
       throw error
     }

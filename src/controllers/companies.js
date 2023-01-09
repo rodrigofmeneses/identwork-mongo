@@ -8,8 +8,9 @@ const CompaniesController = {
    * @returns 
    */
   async getCompanies(req, res) {
+    const { page = 1, limit = 5 } = req.query
     try {
-      const result = await CompaniesService.readAll()
+      const result = await CompaniesService.readAll(page, limit)
       return res.json(result)
     } catch (error) {
       return error
@@ -28,8 +29,9 @@ const CompaniesController = {
 
   async getEmployeesByCompanyId(req, res) {
     const id = req.params.id
+    const { page = 1, limit = 5 } = req.query
     try {
-      const result = await CompaniesService.findEmployees(id)
+      const result = await CompaniesService.findEmployees(id, page, limit)
       res.json(result)
     } catch (error) {
       res.status(404).json({ message: error.message })
