@@ -1,4 +1,5 @@
 import Employee from "../models/employee.js";
+import { employeeSchema, updateEmployeeSchema } from "../schemas/schemas.employee.js";
 
 const EmployeesService = {
   async readAll(page, limit, filter) {
@@ -31,7 +32,7 @@ const EmployeesService = {
             }
           }]
       }
-      
+
       return Employee.paginate(find_query, options)
     } catch (error) {
       throw error
@@ -55,6 +56,7 @@ const EmployeesService = {
      */
     const employee = new Employee(data)
     try {
+      await employeeSchema.validateAsync(data, { abortEarly: false })
       await employee.save()
       return employee.populate('company')
     } catch (error) {
@@ -68,12 +70,12 @@ const EmployeesService = {
      * @param {object} data Data of employee
     */
     try {
+      await updateEmployeeSchema.validateAsync(data, { abortEarly: false })
       return Employee.findByIdAndUpdate(
         id,
         data,
         {
-          returnDocument: 'after',
-          runValidators: true
+          returnDocument: 'after'
         }
       ).populate('company')
     } catch (error) {

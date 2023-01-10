@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Company from "../models/company.js";
 import Employee from "../models/employee.js";
+import { companySchema, updateCompanySchema } from "../schemas/schemas.company.js";
 
 const CompaniesService = {
   async readAll(page, limit, filter) {
@@ -68,6 +69,7 @@ const CompaniesService = {
      */
     const company = new Company(data)
     try {
+      await companySchema.validateAsync(data, { abortEarly: false })
       return company.save()
     } catch (error) {
       throw error
@@ -80,7 +82,8 @@ const CompaniesService = {
      * @param {object} data Data of Company
     */
     try {
-      return Company.findByIdAndUpdate(id, data, { returnDocument: 'after', runValidators: true })
+      await updateCompanySchema.validateAsync(data, { abortEarly: false })
+      return Company.findByIdAndUpdate(id, data, { returnDocument: 'after' })
     } catch (error) {
       throw error
     }
